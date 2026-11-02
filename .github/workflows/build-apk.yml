@@ -41,8 +41,19 @@ jobs:
             exit 1
           fi
           echo "Project directory: $PROJECT_DIR"
+
+          cat > "$RUNNER_TEMP/kotlin-jvm-target.gradle" <<'EOF'
+          allprojects {
+              tasks.configureEach { task ->
+                  if (task.name.endsWith('Kotlin')) {
+                      task.kotlinOptions.jvmTarget = '1.8'
+                  }
+              }
+          }
+          EOF
+
           cd "$PROJECT_DIR"
-          gradle --no-daemon assembleDebug
+          gradle --no-daemon -I "$RUNNER_TEMP/kotlin-jvm-target.gradle" assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
