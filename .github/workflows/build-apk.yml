@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'blue-big-fish-v12-android-project.zip'
+      blue-big-fish-v12-android-project-fixed.zip
       - '.github/workflows/build-apk.yml'
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
       - name: Extract Android project
         run: |
           mkdir source
-          unzip -q blue-big-fish-v12-android-project.zip -d source
+          unzip -q blue-big-fish-v12-android-project-fixed.zip -d source
           find source \( -name settings.gradle -o -name settings.gradle.kts \) -print
 
       - name: Build debug APK
